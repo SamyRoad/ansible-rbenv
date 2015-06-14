@@ -1,4 +1,4 @@
-env
+Rbenv
 ========
 
 Role for installing [rbenv](https://github.com/sstephenson/rbenv).
