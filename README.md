@@ -54,9 +54,9 @@ Default variables are:
 
 Description:
 
-- ` rbenv.env ` - Type of rbenv installation. Allows 'system' or 'user' values
-- ` rbenv.version ` - Version of rbenv to install (tag from [rbenv releases page](https://github.com/sstephenson/rbenv/releases))
-- ` rbenv.ruby_version ` - Version of ruby to install as global rbenv ruby
+- ` rbenv_env ` - Type of rbenv installation. Allows 'system' or 'user' values
+- ` rbenv_version ` - Version of rbenv to install (tag from [rbenv releases page](https://github.com/sstephenson/rbenv/releases))
+- ` rbenv_ruby_version ` - Version of ruby to install as global rbenv ruby
 - ` rbenv_repo ` - Repository with source code of rbenv to install
 - ` rbenv_with_patch ` - Url to patch file that will be applied before install ruby.
 - ` rbenv_plugins ` - Array of Hashes with information about plugins to install
