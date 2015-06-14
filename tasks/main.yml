@@ -1,0 +1,30 @@
+---
+- name: Include env vars
+  include_vars: "{{ rbenv_env }}.yml"
+  tags:
+    - rbenv
+
+- include: dependencies.yml
+
+- include: system_install.yml
+  when: rbenv_env == "system"
+
+- include: user_install.yml
+  when: rbenv_env == "user"
+
+- name: Add rbenv initialization to profile
+  template: src=etc_profile.d_rbenv.sh.j2 dest=/etc/profile.d/rbenv.sh owner=root group=root mode=0755
+  tags:
+    - rbenv
+
+- include: system_configure.yml
+  when: rbenv_env == "system"
+
+- include: user_configure.yml
+  when: rbenv_env == "user"
+
+- include: install_selected_ruby.yml
+
+- debug: msg="You need to reload your terminal session in order to get the correct ruby version"
+  tags:
+    - rbenv

@@ -1,0 +1,21 @@
+---
+- name: "[user] Set default-gems"
+  copy: src=default-gems dest={{ rbenv_root }}/default-gems
+  with_items: rbenv_users
+  sudo_user: "{{ item }}"
+  tags:
+    - rbenv
+
+- name: "[user] Set gemrc"
+  copy: src=gemrc dest=~/.gemrc
+  with_items: rbenv_users
+  sudo_user: "{{ item }}"
+  tags:
+    - rbenv
+
+- name: "[user] Set vars"
+  copy: src=vars dest={{ rbenv_root }}/vars
+  with_items: rbenv_users
+  sudo_user: "{{ item }}"
+  tags:
+    - rbenv

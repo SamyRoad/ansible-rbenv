@@ -1,0 +1,15 @@
+---
+- name: "[system] Set default-gems"
+  copy: src=default-gems dest={{ rbenv_root }}/default-gems
+  tags:
+    - rbenv
+
+- name: "[system] Set gemrc"
+  copy: src=gemrc dest=/etc/gemrc
+  tags:
+    - rbenv
+
+- name: "[system] Set vars"
+  copy: src=vars dest={{ rbenv_root }}/vars
+  tags:
+    - rbenv
