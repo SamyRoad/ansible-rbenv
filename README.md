@@ -1,5 +1,7 @@
 # Rbenv
 
+  [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-rbenv-blue.svg)](https://galaxy.ansible.com/list#/roles/6554)
+
   Ansible role for installing [rbenv](https://github.com/sstephenson/rbenv) and manage multiple ruby versions.
 
   You can use this role for install a customized version of ruby system-wide or per user, and install a curated list of
@@ -22,7 +24,7 @@
 
 ### `rbenv_with_patch`
 
-  If you need to patch ruby before compile it, put the URL taht point to patch file here to apply it.
+  If you need to patch ruby before compile it, put the URL that point to patch file here to apply it.
 
 ### `rbenv_users`
 
