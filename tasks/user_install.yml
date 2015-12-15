@@ -1,23 +1,35 @@
 ---
 - name: "[user] Checkout rbenv_repo for selected users"
-  git: repo={{ rbenv_repo }} dest={{ rbenv_root }} version={{ rbenv_version }} accept_hostkey=true force=true
+  git:
+    repo: "{{ rbenv_repo }}"
+    dest: "{{ rbenv_root }}"
+    version: "{{ rbenv_version }}"
+    accept_hostkey: true
+    force: true
+  when: item != "root"
   with_items: rbenv_users
-  sudo_user: "{{ item }}"
+  become_user: "{{ item }}"
   tags:
     - rbenv
 
 - name: "[user] Create plugins directory for selected users"
   file: state=directory path={{ rbenv_root }}/plugins
+  when: item != "root"
   with_items: rbenv_users
-  sudo_user: "{{ item }}"
+  become_user: "{{ item }}"
   tags:
     - rbenv
 
 - name: "[user] Install plugins for selected users"
-  git: repo={{ item[1].repo }} dest={{ rbenv_root }}/plugins/{{ item[1].name }} version={{ item[1].version }}
+  git:
+    repo: "{{ item[1].repo }}"
+    dest: "{{ rbenv_root }}/plugins/{{ item[1].name }}"
+    version: "{{ item[1].version }}"
+    accept_hostkey: true
+  when: item[0] != "root"
   with_nested:
     - rbenv_users
     - rbenv_plugins
-  sudo_user: "{{ item[0] }}"
+  become_user: "{{ item[0] }}"
   tags:
     - rbenv

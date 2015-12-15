@@ -17,7 +17,7 @@ galaxy_info:
   min_ansible_version: 1.9
   #
   # Below are all platforms currently available. Just uncomment
-  # the ones that apply to your role. If you don't see your 
+  # the ones that apply to your role. If you don't see your
   # platform on this list, let us know and we'll get it added!
   #
   platforms:
@@ -123,5 +123,4 @@ galaxy_info:
   #- packaging
   - system
   #- web
-dependencies:
-  - role: build
+dependencies: []

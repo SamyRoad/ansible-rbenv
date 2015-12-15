@@ -1,4 +1,6 @@
-{% if rbenv_env == 'system' %}
+# This file is managed by Ansible, all changes will be lost
+
+{% if rbenv_env == "system" %}
 
 export PATH=/usr/local/rbenv/bin:$PATH
 export RBENV_ROOT="{{ rbenv_root }}"

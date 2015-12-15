@@ -1,0 +1,33 @@
+---
+- name: "[system] Check ruby version"
+  shell: /bin/bash -lc "rbenv versions | grep {{ rbenv_ruby_version }}"
+  register: ruby_installed
+  ignore_errors: yes
+  always_run: yes
+  tags:
+    - rbenv
+
+- name: "[system] Install selected ruby version"
+  shell: /bin/bash -lc "rbenv install {{ rbenv_ruby_version }}"
+  when: ruby_installed|failed and rbenv_with_patch == ''
+  tags:
+    - rbenv
+
+- name: "[system] Install patched ruby"
+  shell: /bin/bash -lc "curl -fsSL {{rbenv_with_patch}} | rbenv install --patch {{ rbenv_ruby_version }}"
+  when: ruby_installed|failed and rbenv_with_patch != ''
+  tags:
+    - rbenv
+
+- name: "[system] Set installed ruby as global"
+  shell: /bin/bash -lc "rbenv global {{ rbenv_ruby_version }} && rbenv rehash"
+  when: ruby_installed|failed
+  tags:
+    - rbenv
+
+- name: "[system] Unsinstall rubies"
+  shell: /bin/bash -lc "rbenv uninstall -f {{ item }} && rbenv rehash"
+  with_items: rbenv_uninstall_versions
+  tags:
+    - rbenv
+    - uninstall

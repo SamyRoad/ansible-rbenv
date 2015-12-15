@@ -10,10 +10,15 @@
   when: rbenv_env == "system"
 
 - include: user_install.yml
-  when: rbenv_env == "user"
+  when: rbenv_env == "user" and rbenv_users|length > 0
 
 - name: Add rbenv initialization to profile
-  template: src=etc_profile.d_rbenv.sh.j2 dest=/etc/profile.d/rbenv.sh owner=root group=root mode=0755
+  template:
+    src: etc/profile.d/rbenv.sh.j2
+    dest: /etc/profile.d/rbenv.sh
+    owner: root
+    group: root
+    mode: 0755
   tags:
     - rbenv
 
@@ -21,9 +26,13 @@
   when: rbenv_env == "system"
 
 - include: user_configure.yml
-  when: rbenv_env == "user"
+  when: rbenv_env == "user" and rbenv_users|length > 0
 
-- include: install_selected_ruby.yml
+- include: system_install_selected_ruby.yml
+  when: rbenv_env == "system"
+
+- include: user_install_selected_ruby.yml
+  when: rbenv_env == "user" and rbenv_users|length > 0
 
 - debug: msg="You need to reload your terminal session in order to get the correct ruby version"
   tags:

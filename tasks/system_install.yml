@@ -1,6 +1,11 @@
 ---
 - name: "[system] Checkout rbenv_repo"
-  git: repo={{ rbenv_repo }} dest={{ rbenv_root }} version={{ rbenv.version }} accept_hostkey=true force=true
+  git:
+    repo: "{{ rbenv_repo }}"
+    dest: "{{ rbenv_root }}"
+    version: "{{ rbenv_version }}"
+    accept_hostkey: true
+    force: true
   tags:
     - rbenv
 
@@ -10,7 +15,11 @@
     - rbenv
 
 - name: "[system] Install plugins"
-  git: repo={{ item.repo }} dest={{ rbenv_root }}/plugins/{{ item.name }} version={{ item.version }}
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ rbenv_root }}/plugins/{{ item.name }}"
+    version: "{{ item.version }}"
+    accept_hostkey: true
   with_items: rbenv_plugins
   tags:
     - rbenv

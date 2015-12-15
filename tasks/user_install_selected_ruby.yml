@@ -1,0 +1,51 @@
+---
+- name: "[user] Check ruby version"
+  shell: /bin/bash -lc "rbenv versions | grep {{ rbenv_ruby_version }}"
+  become_user: "{{ item }}"
+  register: ruby_installed
+  ignore_errors: yes
+  when: item != "root"
+  with_items: rbenv_users
+  always_run: yes
+  tags:
+    - rbenv
+
+- name: "[user] Install selected ruby version"
+  shell: /bin/bash -lc "rbenv install {{ rbenv_ruby_version }}"
+  when: item[0]|failed and rbenv_with_patch == '' and item[1] != "root"
+  become_user: "{{ item[1] }}"
+  with_together:
+    - ruby_installed.results
+    - rbenv_users
+  tags:
+    - rbenv
+
+- name: "[user] Install patched ruby"
+  shell: /bin/bash -lc "curl -fsSL {{rbenv_with_patch}} | rbenv install --patch {{ rbenv_ruby_version }}"
+  when: item[0]|failed and rbenv_with_patch != '' and item[1] != "root"
+  become_user: "{{ item[1] }}"
+  with_together:
+    - ruby_installed.results
+    - rbenv_users
+  tags:
+    - rbenv
+
+- name: "[user] Set installed ruby as global"
+  shell: /bin/bash -lc "rbenv global {{ rbenv_ruby_version }} && rbenv rehash"
+  when: item[0]|failed and item[1] != "root"
+  become_user: "{{ item[1] }}"
+  with_together:
+    - ruby_installed.results
+    - rbenv_users
+  tags:
+    - rbenv
+
+- name: "[user] Unsinstall rubies"
+  shell: /bin/bash -lc "rbenv uninstall -f {{ item[1] }} && rbenv rehash"
+  when: rbenv_uninstall_versions|length > 0 and item[0] != "root"
+  become_user: "{{ item[0] }}"
+  with_nested:
+    - rbenv_users
+    - rbenv_uninstall_versions
+  tags:
+    - rbenv
