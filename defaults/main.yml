@@ -1,7 +1,7 @@
 ---
 rbenv_env: system # where to install ruby: system or user
 rbenv_version: v1.0.0
-rbenv_ruby_version: 2.3.0
+rbenv_ruby_version: 2.3.1
 
 rbenv_repo: "git://github.com/sstephenson/rbenv.git"
 rbenv_with_patch: '' # url with patch to apply before compile
@@ -12,13 +12,13 @@ rbenv_plugins:
     version: "v1.2.0"
   - name: "ruby-build"
     repo: "git://github.com/sstephenson/ruby-build.git"
-    version: "v20151230"
+    version: "v20160602"
   - name: "rbenv-default-gems"
     repo: "git://github.com/sstephenson/rbenv-default-gems.git"
     version: "4f68eae50c8afc3a476d0a904719262f61a4fb44"
   - name: "rbenv-installer"
-    repo: "git://github.com/fesplugas/rbenv-installer.git"
-    version: "22cc96aa45d06faca5958b1aa1688596198407a3"
+    repo: "git://github.com/rbenv/rbenv-installer.git"
+    version: "bc21e7055dcc8f5f9bc66ce0c78cc9ae0c28cd7a"
   - name: "rbenv-update"
     repo: "git://github.com/rkh/rbenv-update.git"
     version: "1961fa180280bb50b64cbbffe6a5df7cf70f5e50"

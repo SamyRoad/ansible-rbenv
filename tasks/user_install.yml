@@ -7,7 +7,7 @@
     accept_hostkey: true
     force: true
   when: item != "root"
-  with_items: rbenv_users
+  with_items: "{{ rbenv_users }}"
   become_user: "{{ item }}"
   tags:
     - rbenv
@@ -15,7 +15,7 @@
 - name: "[user] Create plugins directory for selected users"
   file: state=directory path={{ rbenv_root }}/plugins
   when: item != "root"
-  with_items: rbenv_users
+  with_items: "{{ rbenv_users }}"
   become_user: "{{ item }}"
   tags:
     - rbenv

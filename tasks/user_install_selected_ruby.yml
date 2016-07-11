@@ -5,7 +5,7 @@
   register: ruby_installed
   ignore_errors: yes
   when: item != "root"
-  with_items: rbenv_users
+  with_items: "{{ rbenv_users }}"
   always_run: yes
   tags:
     - rbenv
